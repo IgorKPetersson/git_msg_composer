@@ -88,7 +88,7 @@ echo BODY: [optional body, can be empty]
 ) > "%TEMP_PROMPT%"
 
 REM Call Python script to interact with Gemini API
-python -c "import requests, json, sys; prompt = open('%TEMP_PROMPT%', 'r', encoding='utf-8').read(); payload = {'contents': [{'parts': [{'text': prompt}]}]}; response = requests.post('https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent?key=%GEMINI_API_KEY%', json=payload); result = response.json(); text = result['candidates'][0]['content']['parts'][0]['text']; open('%TEMP_RESPONSE%', 'w', encoding='utf-8').write(text); print(text)" 2>nul
+python "%~dp0gemini_api.py" "%TEMP_PROMPT%" "%TEMP_RESPONSE%" 2>nul
 
 if errorlevel 1 (
     echo Error: Failed to generate commit message
@@ -106,7 +106,7 @@ for /f "usebackq delims=" %%a in ("%TEMP_RESPONSE%") do (
         set "subject=!line:~9!"
     )
 )
-
+# detta är en test
 REM Display the generated message
 echo.
 echo ================================
@@ -154,3 +154,4 @@ REM Cleanup
 del /f temp_*.txt "%TEMP_PROMPT%" "%TEMP_RESPONSE%" 2>nul
 
 endlocal
+pause
