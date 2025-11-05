@@ -28,6 +28,13 @@ if not exist ".env" (
     exit /b
 )
 
+REM Kill any process using port 8000
+echo Checking if port 8000 is already in use...
+for /f "tokens=5" %%a in ('netstat -ano ^| findstr :8000') do (
+    echo Killing existing process on port 8000...
+    taskkill /F /PID %%a 2>nul
+)
+
 REM Start the server
 echo.
 echo Starting FastAPI server on http://localhost:8000

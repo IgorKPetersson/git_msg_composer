@@ -30,6 +30,8 @@ class GitAnalyzer:
                 ["git", "diff", "--cached", "--unified=3"],
                 capture_output=True,
                 text=True,
+                encoding='utf-8',
+                errors='replace',  # Replace problematic characters instead of crashing
                 check=True
             )
 
@@ -40,6 +42,8 @@ class GitAnalyzer:
                 ["git", "diff", "--cached", "--numstat"],
                 capture_output=True,
                 text=True,
+                encoding='utf-8',
+                errors='replace',
                 check=True
             )
 
@@ -51,6 +55,8 @@ class GitAnalyzer:
                 ["git", "diff", "--cached", "--name-only"],
                 capture_output=True,
                 text=True,
+                encoding='utf-8',
+                errors='replace',
                 check=True
             )
 
@@ -81,6 +87,8 @@ class GitAnalyzer:
                 ["git", "diff", "--unified=3"],
                 capture_output=True,
                 text=True,
+                encoding='utf-8',
+                errors='replace',
                 check=True
             )
 
@@ -144,6 +152,8 @@ class GitAnalyzer:
                 ["git", "log", f"-{count}", "--pretty=format:%h|%s|%an|%ar"],
                 capture_output=True,
                 text=True,
+                encoding='utf-8',
+                errors='replace',
                 check=True
             )
 

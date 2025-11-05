@@ -24,8 +24,9 @@ class GeminiService:
 
         genai.configure(api_key=api_key)
 
-        # WHY gemini-1.5-flash? It's fast and cost-effective for this task
-        self.model = genai.GenerativeModel('gemini-1.5-flash')
+        # WHY gemini-2.5-flash? It's fast, free, and great for code analysis
+        # Using the correct model name from the available models list
+        self.model = genai.GenerativeModel('models/gemini-2.5-flash')
 
         # Commit message conventions (standardized format)
         self.commit_types = {
@@ -54,6 +55,10 @@ class GeminiService:
             # Call Gemini API
             response = self.model.generate_content(prompt)
 
+            # Check if response has text (can be None if content is blocked or API error)
+            if not response or not hasattr(response, 'text'):
+                raise Exception("Empty response from Gemini API")
+
             # Parse response
             message_data = self._parse_response(response.text)
 
@@ -61,9 +66,12 @@ class GeminiService:
 
         except Exception as e:
             # Fallback if AI fails
+            print(f"Gemini API error: {e}")  # Log the error for debugging
             return {
                 "type": "chore",
-                "message": f"chore: update {len(files)} file(s)\n\nFiles: {', '.join(files)}"
+                "subject": f"update {len(files)} file(s)",
+                "message": f"chore: update {len(files)} file(s)\n\nFiles: {', '.join(files)}",
+                "body": ""
             }
 
     def _create_prompt(self, diff: str, files: list[str]) -> str:
@@ -107,6 +115,15 @@ BODY: Implement JWT-based authentication with login and registration endpoints. 
 
         WHY parsing? Convert AI text into usable format for our app
         """
+        # Check if response_text is None (can happen with API errors or blocked content)
+        if response_text is None:
+            return {
+                "type": "chore",
+                "subject": "update files",
+                "message": "chore: update files",
+                "body": ""
+            }
+
         lines = response_text.strip().split("\n")
 
         commit_type = "chore"

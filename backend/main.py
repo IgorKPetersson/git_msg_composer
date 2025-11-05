@@ -7,6 +7,11 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from typing import Optional
 import os
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+# WHY? So we can access GEMINI_API_KEY and other config
+load_dotenv()
 
 from git_analyzer import GitAnalyzer
 from gemini_service import GeminiService

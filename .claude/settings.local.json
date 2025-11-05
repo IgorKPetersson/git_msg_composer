@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(netstat:*)",
+      "Bash(xargs:*)",
+      "Bash(curl:*)",
+      "Bash(python:*)",
+      "Bash(findstr:*)",
+      "Bash(taskkill /F /PID 10496)",
+      "Bash(taskkill //F //PID 10496)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
