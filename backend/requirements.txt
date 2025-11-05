@@ -1,0 +1,22 @@
+# FastAPI - Modern web framework for APIs
+# WHY? Fast, automatic docs, type checking
+fastapi==0.109.0
+
+# Uvicorn - ASGI server to run FastAPI
+# WHY? FastAPI needs this to run
+uvicorn[standard]==0.27.0
+
+# Pydantic - Data validation
+# WHY? Comes with FastAPI, validates request/response data
+pydantic==2.5.3
+
+# Google Generative AI - Gemini API
+# WHY? This is our AI brain for analyzing code
+google-generativeai==0.3.2
+
+# Python-dotenv - Load environment variables from .env file
+# WHY? Keep API keys secure and separate from code
+python-dotenv==1.0.0
+
+# CORS middleware (included in FastAPI but listed for clarity)
+# WHY? Allows frontend to talk to backend
